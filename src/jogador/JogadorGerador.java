@@ -1,4 +1,4 @@
-package org.example;
+package jogador;
 
 import java.util.Random;
 import java.net.http.HttpClient;

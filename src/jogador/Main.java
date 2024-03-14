@@ -1,4 +1,4 @@
-package org.example;
+package jogador;
 
 import java.net.URI;
 import java.net.http.HttpClient;
