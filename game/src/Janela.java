@@ -1,5 +1,3 @@
-package game;
-
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -13,28 +11,11 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
-
-public class HelloWorld {
-
+public class Janela {
 	// The window handle
-	private long window;
+	private static long window;
 
-	public void run() {
-		System.out.println("Hello LWJGL " + Version.getVersion() + "!");
-
-		init();
-		loop();
-
-		// Free the window callbacks and destroy the window
-		glfwFreeCallbacks(window);
-		glfwDestroyWindow(window);
-
-		// Terminate GLFW and free the error callback
-		glfwTerminate();
-		glfwSetErrorCallback(null).free();
-	}
-
-	private void init() {
+	private static void init() {
 		// Setup an error callback. The default implementation
 		// will print the error message in System.err.
 		GLFWErrorCallback.createPrint(System.err).set();
@@ -49,7 +30,7 @@ public class HelloWorld {
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
 
 		// Create the window
-		window = glfwCreateWindow(300, 300, "Hello World!", NULL, NULL);
+		window = glfwCreateWindow(800, 500, "Hello World!", NULL, NULL);
 		if ( window == NULL )
 			throw new RuntimeException("Failed to create the GLFW window");
 
@@ -57,6 +38,8 @@ public class HelloWorld {
 		glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
 			if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
 				glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
+			if ( key == GLFW_KEY_A){}
+
 		});
 
 		// Get the thread stack and push a new frame
@@ -72,9 +55,9 @@ public class HelloWorld {
 
 			// Center the window
 			glfwSetWindowPos(
-				window,
-				(vidmode.width() - pWidth.get(0)) / 2,
-				(vidmode.height() - pHeight.get(0)) / 2
+					window,
+					(vidmode.width() - pWidth.get(0)) / 2,
+					(vidmode.height() - pHeight.get(0)) / 2
 			);
 		} // the stack frame is popped automatically
 
@@ -87,7 +70,7 @@ public class HelloWorld {
 		glfwShowWindow(window);
 	}
 
-	private void loop() {
+	private static void loop() {
 		// This line is critical for LWJGL's interoperation with GLFW's
 		// OpenGL context, or any context that is managed externally.
 		// LWJGL detects the context that is current in the current thread,
@@ -96,7 +79,7 @@ public class HelloWorld {
 		GL.createCapabilities();
 
 		// Set the clear color
-		glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 		// Run the rendering loop until the user has attempted to close
 		// the window or has pressed the ESCAPE key.
@@ -112,7 +95,16 @@ public class HelloWorld {
 	}
 
 	public static void main(String[] args) {
-		new HelloWorld().run();
-	}
+		System.out.println("Hello LWJGL " + Version.getVersion() + "!");
+		init();
+		loop();
 
+		// Free the window callbacks and destroy the window
+		glfwFreeCallbacks(window);
+		glfwDestroyWindow(window);
+
+		// Terminate GLFW and free the error callback
+		glfwTerminate();
+		glfwSetErrorCallback(null).free();
+	}
 }

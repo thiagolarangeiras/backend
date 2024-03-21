@@ -1,5 +1,3 @@
-package jogador;
-
 import java.util.Random;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
