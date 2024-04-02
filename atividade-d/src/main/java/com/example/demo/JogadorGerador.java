@@ -52,8 +52,8 @@ public class JogadorGerador {
         posicoes = chamar(posicao_uri);
         clubes = chamar(clube_uri);
         
-        for (String posicao : posicoes) {
-            posicao = posicao.replace("\"", "").replace(",", "");
+        for (int i=0; i<posicoes.length; i++) {
+            posicoes[i] = posicoes[i].replace("\"", "").replace(",", "");
         }
     }
 
