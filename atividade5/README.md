@@ -68,7 +68,7 @@ Endpoints:
 * Excluir notícia(delete)
 
 #### 1.2.1 Requisição: Inserir Notícia
-	[POST] /noticias/{noticia-id}
+	[POST] /noticias
 ```JSON
 {
  "autor":"carlos_andrade",
