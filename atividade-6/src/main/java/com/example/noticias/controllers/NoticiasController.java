@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.noticias.models.Noticia;
+import com.example.noticias.models.NoticiaDto;
 import com.example.noticias.services.NoticiasService;
 
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
 public class NoticiasController {
-    
+
     public static List<Noticia> noticias = new ArrayList<>();
     
     @Autowired
@@ -29,11 +30,8 @@ public class NoticiasController {
 
 
     @PostMapping("/noticias")
-    public ResponseEntity<String> inserirNoticia(@RequestBody Map<String, String> requestBody) {
-        String autor = requestBody.get("autor");
-        String titulo = requestBody.get("titulo");
-        String texto = requestBody.get("texto");
-        Noticia noticia = new Noticia(titulo, texto, autor);
+    public ResponseEntity<String> inserirNoticia(@RequestBody NoticiaDto dto) {
+        Noticia noticia = dto.newClass();
         noticias.add(noticia);
         return ResponseEntity.status(HttpStatus.OK).body("Postada com sucesso");
     }
@@ -44,15 +42,13 @@ public class NoticiasController {
     }
 
     @PutMapping("/noticias/{noticia-id}")
-    public ResponseEntity<String> modificarNoticia(@PathVariable("noticia-id") Long noticiaId, @RequestBody Noticia noticiaAlterada) {
+    public ResponseEntity<String> modificarNoticia(@PathVariable("noticia-id") Long noticiaId, @RequestBody NoticiaDto dto) {
         int indexNoticia = noticiasService.findNoticiaById(noticiaId);
         if (indexNoticia < 0) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Notícia não encontrada");
         }
-        noticias.get(indexNoticia).setTitulo(noticiaAlterada.getTitulo());
-        noticias.get(indexNoticia).setTexto(noticiaAlterada.getTexto());
-        noticias.get(indexNoticia).setAutor(noticiaAlterada.getAutor());
-        noticias.get(indexNoticia).setData(noticiaAlterada.getData());
+        Noticia noticia = noticias.get(indexNoticia);
+        dto.updateClass(noticia);
         return ResponseEntity.ok("Atualizada com sucesso");
     }
 

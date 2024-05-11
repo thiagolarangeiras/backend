@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.noticias.models.Comentario;
+import com.example.noticias.models.ComentarioDto;
 import com.example.noticias.models.Noticia;
 
 import com.example.noticias.services.ComentariosService;
@@ -29,9 +30,8 @@ public class ComentariosController {
     private NoticiasService noticiasService;
 
     @PostMapping("/noticias/{noticia-id}/comentarios")
-    public ResponseEntity<String> inserirComentario(@PathVariable("noticia-id") Long noticiaId, @RequestBody Map<String, String> requestBody) {
-        Comentario comentario = new Comentario(requestBody.get("usuario"), requestBody.get("texto"));
-
+    public ResponseEntity<String> inserirComentario(@PathVariable("noticia-id") Long noticiaId, @RequestBody ComentarioDto dto) {
+        Comentario comentario = dto.newClass();
         int indexNoticia = noticiasService.findNoticiaById(noticiaId);
     
         if (indexNoticia < 0) {
@@ -58,9 +58,9 @@ public class ComentariosController {
         return ResponseEntity.ok(NoticiasController.noticias.get(indexNoticia).getComentarios());
     }
     @PutMapping("/noticias/{noticia-id}/comentarios/{comentario-id}")
-    public ResponseEntity<String> modificarComentario(@PathVariable("noticia-id") Long noticiaId, @PathVariable("comentario-id") Long comentarioId, @RequestBody Map<String, String> requestBody) {
+    public ResponseEntity<String> modificarComentario(@PathVariable("noticia-id") Long noticiaId, @PathVariable("comentario-id") Long comentarioId, @RequestBody ComentarioDto dto) {
         int indexNoticia = noticiasService.findNoticiaById(noticiaId);
-        if( comentariosService.editComentarioById(indexNoticia, comentarioId, requestBody.get("texto")) <= -1){
+        if( comentariosService.editComentarioById(indexNoticia, comentarioId, dto.texto()) <= -1){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não há um comentario com este id");
         }
         return ResponseEntity.ok("Atualizado com sucesso");
