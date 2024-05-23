@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Service
 public class TransacaoService {
-    private Map<Integer, Transacao> transacaoMap = new HashMap<>();
+    public Map<Integer, Transacao> transacaoMap = new HashMap<>();
     public void insert(TransacaoDto transacaoDto){
         transacaoMap.put(1, TransacaoMapper.toEntity(transacaoDto));
     }

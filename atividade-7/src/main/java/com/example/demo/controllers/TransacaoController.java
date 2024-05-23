@@ -12,6 +12,12 @@ public class TransacaoController {
     @Autowired
     TransacaoService transacaoService;
 
+
+    @GetMapping
+    public ResponseEntity getTransacao(){
+        return ResponseEntity.status(200).body(transacaoService.transacaoMap);
+    }
+
     @PostMapping
     public ResponseEntity postTransacao(@RequestBody TransacaoDto transacaoDto){
         transacaoService.insert(transacaoDto);

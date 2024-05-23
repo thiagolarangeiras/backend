@@ -1,10 +1,9 @@
 package com.example.demo.controllers;
 
 import com.example.demo.dtos.ClienteDto;
-import com.example.demo.mappers.ClienteMapper;
-import com.example.demo.models.Cliente;
 import com.example.demo.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,8 +13,8 @@ public class ClienteController {
     ClienteService clienteService;
 
     @GetMapping("{nome}")
-    public ClienteDto getCliente(@PathVariable("nome") String nome){
+    public ResponseEntity<Object> getCliente(@PathVariable("nome") String nome){
         ClienteDto clienteDto = clienteService.getByNome(nome);
-        return clienteDto;
+        return ResponseEntity.status(200).body(clienteDto);
     }
 }
