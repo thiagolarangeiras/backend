@@ -24,18 +24,23 @@ public class CarroService {
     CarroMapper carroMapper;
 
     public List<CarroGetDto> getAll(Integer pagina, Integer qtde, List<String> sortBy, String nome) {
-        List<Sort.Order> orderByList = sortBy.stream().map((nomeAtributo) -> {
-            return new Sort.Order(Sort.Direction.ASC, nomeAtributo);
-        }).toList();
+        Pageable pageConfig;
+        if(sortBy != null){
+            List<Sort.Order> orderByList = sortBy.stream().map((nomeAtributo) -> {
+                return new Sort.Order(Sort.Direction.ASC, nomeAtributo);
+            }).toList();
+            pageConfig = PageRequest.of(pagina, qtde, Sort.by(orderByList));
+        } else {
+            pageConfig = PageRequest.of(pagina, qtde);
+        }
 
-        Pageable pageConfig = PageRequest.of(pagina, qtde, Sort.by(orderByList));
         Page<Carro> listaAnimais;
-        if(nome.isBlank())
+        if(nome == null)
             listaAnimais = carroRepository.findAll(pageConfig);
         else
             listaAnimais = carroRepository.findByNomeContaining(nome, pageConfig);
-        List<CarroGetDto> dtosResult = listaAnimais.stream().map(CarroMapper::EntityToGet).toList();
-        return dtosResult;
+
+        return listaAnimais.stream().map(CarroMapper::EntityToGet).toList();
     }
 
     public CarroGetDto get(UUID id) {

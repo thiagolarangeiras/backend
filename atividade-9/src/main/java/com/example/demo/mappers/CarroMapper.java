@@ -3,9 +3,11 @@ package com.example.demo.mappers;
 import com.example.demo.dtos.CarroGetDto;
 import com.example.demo.dtos.CarroPostDto;
 import com.example.demo.models.Carro;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Component
 public class CarroMapper {
     public static Carro PostToEntity(CarroPostDto dto){
         return new Carro(

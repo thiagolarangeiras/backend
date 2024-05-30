@@ -3,6 +3,10 @@ package com.example.demo.controllers;
 import com.example.demo.dtos.CarroGetDto;
 import com.example.demo.dtos.CarroPostDto;
 import com.example.demo.services.CarroService;
+import com.example.demo.validators.CustomNotEmpty;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +28,12 @@ public class CarroController {
 
     @GetMapping
     public ResponseEntity<Object> getAllCarro(
-            @RequestParam("pagina") int pagina,
-            @RequestParam("qtde") int qtde,
-            @RequestParam("sortBy") List<String> sortBy,
-            @RequestParam("nome") String nome
+            @RequestParam("pagina") @Min(0) int pagina,
+            @RequestParam("qtde") @Min(5) @Max(200) int qtde,
+            @RequestParam("sort") @Nullable @CustomNotEmpty List<String> sort,
+            @RequestParam("nome") @Nullable @CustomNotEmpty String nome
     ){
-        List<CarroGetDto> dtos = carroService.getAll(pagina, qtde, sortBy, nome);
+        List<CarroGetDto> dtos = carroService.getAll(pagina, qtde, sort, nome);
         return ResponseEntity.status(200).body(dtos);
     }
 
