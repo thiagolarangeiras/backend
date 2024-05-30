@@ -1,9 +1,8 @@
-package com.example.demo.models;
+package com.example.demo.dtos;
 
 import java.util.UUID;
 
 public record CarroPostDto(
-    UUID id,
     String nome,
     String modelo,
     String cor,
