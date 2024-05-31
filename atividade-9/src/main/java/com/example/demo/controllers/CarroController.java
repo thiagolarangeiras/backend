@@ -4,10 +4,11 @@ import com.example.demo.dtos.CarroGetDto;
 import com.example.demo.dtos.CarroPostDto;
 import com.example.demo.services.CarroService;
 import com.example.demo.validators.CustomNotEmpty;
-import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +39,7 @@ public class CarroController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> postCarro(@RequestBody CarroPostDto dto){
+    public ResponseEntity<Object> postCarro(@RequestBody @Valid CarroPostDto dto){
         CarroGetDto dtoResult = carroService.post(dto);
         return ResponseEntity.status(201).body(dtoResult);
     }
