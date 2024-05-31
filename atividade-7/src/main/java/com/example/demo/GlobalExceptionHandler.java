@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.Instant;
 import java.util.List;
 
-//@RestControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
-    //@ResponseStatus(HttpStatus.BAD_REQUEST)
-    //@ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public List<ApiExceptionDto> handleValidationErrors(MethodArgumentNotValidException exception) {
         return exception.getBindingResult().getAllErrors().stream().map((exValidation) -> {
             return new ApiExceptionDto("Erro de validação", exValidation.getDefaultMessage(), Instant.now());

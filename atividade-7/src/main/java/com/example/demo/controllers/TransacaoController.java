@@ -24,6 +24,6 @@ public class TransacaoController {
     @PostMapping
     public ResponseEntity postTransacao(@Valid @RequestBody TransacaoDto transacaoDto){
         transacaoService.insert(transacaoDto);
-        return ResponseEntity.ok("awd");
+        return ResponseEntity.ok("Ok");
     }
 }
