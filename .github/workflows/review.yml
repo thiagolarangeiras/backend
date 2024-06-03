@@ -11,6 +11,7 @@ jobs:
     env:
       STUDENT_NAME: "Thiago Larangeira de Souza"
       STUDENT_ID: "202222207"
+    runs-on: ubuntu-latest
     container:
       image: registry.gitlab.com/professor-rvenson/backend-n1-validate
     steps:
