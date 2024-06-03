@@ -1,0 +1,7 @@
+stages:
+  - review
+review:
+  stage: review
+  image: registry.gitlab.com/professor-rvenson/backend-n1-validate
+  script:
+    - validate
