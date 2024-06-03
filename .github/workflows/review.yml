@@ -15,4 +15,4 @@ jobs:
       image: registry.gitlab.com/professor-rvenson/backend-n1-validate
     steps:
       - name: run review
-        uses: validate
+        run: validate
