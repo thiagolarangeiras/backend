@@ -1,6 +1,9 @@
 stages:
   - review
 review:
+  variables:
+    STUDENT_NAME: "Thiago Larangeira de Souza"
+    STUDENT_ID: "202222207"
   stage: review
   image: registry.gitlab.com/professor-rvenson/backend-n1-validate
   script:
